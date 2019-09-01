@@ -1,13 +1,3 @@
-function setGameOver(){
-  //禁用表单文本输入和按钮
-  guessField.disable = true;
-  guessSubmit.disable = true;
-
-  guessCount = 0;
-  guessField.textContent = ' ';
-
-}
-
 function checkGuess(){
   let userguess = Number(guessField.value);
   if (guessCount === 1) {
@@ -40,4 +30,34 @@ function checkGuess(){
   guessCount++;
   guessField.value = '';
   guessField.focus();
+}
+
+function setGameOver(){
+  //禁用表单文本输入和按钮
+  guessField.disabled = true;
+  guessSubmit.disabled = true;
+  resetButton = document.createElement('button');
+  resetButton.textContent = '开始新游戏';
+  document.body.appendChild(resetButton);
+  resetButton.addEventListener('click', resetGame);
+}
+
+function resetGame() {
+  guessCount = 1;
+
+  const resetParas = document.querySelectorAll('.resultParas p');
+  for (let i = 0 ; i < resetParas.length; i++) {
+    resetParas[i].textContent = '';
+  }
+
+  resetButton.parentNode.removeChild(resetButton);
+
+  guessField.disabled = false;
+  guessSubmit.disabled = false;
+  guessField.value = '';
+  guessField.focus();
+
+  lastResult.style.backgroundColor = 'white';
+
+  randomNumber = Math.floor(Math.random() * 100) + 1;
 }
